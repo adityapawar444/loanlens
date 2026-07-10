@@ -1,6 +1,4 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# ─── Dependencies ─────────────────────────────────────────────────────────────
 /node_modules
 /.pnp
 .pnp.*
@@ -10,32 +8,51 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# ─── Next.js ──────────────────────────────────────────────────────────────────
 /.next/
 /out/
-
-# production
 /build
 
-# misc
-.DS_Store
-*.pem
+# ─── Testing ──────────────────────────────────────────────────────────────────
+/coverage
 
-# debug
+# ─── TypeScript ───────────────────────────────────────────────────────────────
+*.tsbuildinfo
+next-env.d.ts
+
+# ─── Environment & Secrets ────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# ─── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
 
-# vercel
+# ─── Vercel ───────────────────────────────────────────────────────────────────
 .vercel
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# ─── Certs ────────────────────────────────────────────────────────────────────
+*.pem
+
+# ─── Project: sensitive personal finance data ─────────────────────────────────
+# Bank statements, amortisation PDFs, and any personal documents
+*.pdf
+data/loan_data.json
+data/od_savings_data.json
+
+# ─── Project: AI agent / IDE working files ────────────────────────────────────
+.agents/
+.codex/
+.gemini/
+CLAUDE.md
+AGENTS.md
+
+# ─── Project: planning artefacts (optional — remove to track them) ────────────
+home-loan-dashboard-plan.md
