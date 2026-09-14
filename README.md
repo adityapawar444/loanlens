@@ -36,11 +36,18 @@ Complete tracking of money parked in the OD savings account:
 - **Contribution log** — Track inflows by source (Salary, Bonus, etc.) for attribution
 - **By Source donut chart** — Visual breakdown of contributions by funding source
 - **MoM OD balance trend** — Area chart of OD balance snapshots alongside cumulative deposits
+- **Automated EMI Deductions** — Engine automatically deducts upcoming EMIs and interest from the OD balance on due dates.
 - **Audit trail** — Every edit to sources, goals, and contributions is recorded with before/after diffs
 
 ### ⚙️ Settings & Simulator
 - Loan parameters (principal, rate, tenure, disbursement date)
-- Prepayment simulator — Model the impact of lump-sum prepayments on tenure and interest
+- **Multi-Scenario Simulator** — Model the impact of various financial events on top of your live schedule:
+  - **Prepayments**: Lump-sum principal reductions
+  - **Rate Changes**: Repricing risk modelling
+  - **OD Balance**: Simulating cash injections into the OD account
+  - **Disbursements**: Future construction-linked tranches (with hard validation against sanctioned limits)
+- **Impact Analysis** — Side-by-side comparison cards for Total Interest, Tenure, EMI, Effective Rate, Total Disbursed, and Projected OD Savings.
+- **Next 6 Installments Preview** — Month-by-month cash flow and OD savings deltas for the near term.
 
 ---
 
