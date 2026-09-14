@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { calculateEmi, calculateTenure, generateSchedule } from "./calculations";
+import { calculateEmi, calculateTenure, generateSchedule, autoDeductPayments } from "./calculations";
 import { LoanData } from "./types";
+import { OdSavingsData } from "./od-savings-types";
 
 describe("Financial Calculations", () => {
   it("should calculate correct EMI", () => {
@@ -129,5 +130,112 @@ describe("Financial Calculations", () => {
     const schedule = generateSchedule(mockData);
     const lastRow = schedule[schedule.length - 1];
     expect(lastRow.closingBalance).toBe(0);
+  });
+
+  it("should automatically deduct EMI/interest and log payment on passed due dates", () => {
+    const mockLoan: LoanData = {
+      loanDetails: {
+        lender: "Test Bank",
+        accountNumber: "999",
+        sanctionedAmount: 5000000,
+        totalTenureMonths: 180,
+        moratoriumMonths: 12,
+        moratoriumAnchor: "first_disbursement",
+        dueDateDay: 10,
+        dayCountConvention: 365,
+        currentCommunicatedEmi: 50000,
+        policy: {
+          onRateChange: "adjust_tenure",
+          onDisbursementDuringEmi: "adjust_tenure",
+          onPrepayment: "adjust_tenure"
+        }
+      },
+      disbursements: [{ id: "d-1", date: "2026-01-01", amount: 1000000 }],
+      rateHistory: [{ id: "r-1", effectiveDate: "2026-01-01", annualRate: 12 }],
+      odBalanceLog: [{ id: "od-1", date: "2026-01-15", balance: 100000 }],
+      prepayments: [],
+      paymentLog: []
+    };
+
+    const mockOd: OdSavingsData = {
+      emiReserve: 50000,
+      sources: [],
+      contributions: [],
+      goals: [],
+      odBalanceAnnotations: []
+    };
+
+    // The first due date is 2026-02-10.
+    // If today is 2026-02-15, the due date has passed.
+    const res = autoDeductPayments(mockLoan, mockOd, "2026-02-15");
+    expect(res.loanChanged).toBe(true);
+    expect(res.odChanged).toBe(true);
+
+    // Should create a payment entry
+    expect(mockLoan.paymentLog.length).toBe(1);
+    expect(mockLoan.paymentLog[0].dueDate).toBe("2026-02-10");
+    expect(mockLoan.paymentLog[0].amountPaid).toBeGreaterThan(0);
+
+    // Should create a balance snapshot entry
+    expect(mockLoan.odBalanceLog.length).toBe(2); // Initial (Jan 15) + Auto-deduction (Feb 10)
+    const newSnapshot = mockLoan.odBalanceLog.find(l => l.date === "2026-02-10");
+    expect(newSnapshot).toBeDefined();
+    // 100000 - interest (1,000,000 * 12% * 31 / 365 = ~10192) = ~89808
+    expect(newSnapshot?.balance).toBeCloseTo(100000 - mockLoan.paymentLog[0].amountPaid, 1);
+
+    // Should create an annotation
+    expect(mockOd.odBalanceAnnotations.length).toBe(1);
+    expect(mockOd.odBalanceAnnotations[0].odBalanceLogId).toBe(newSnapshot?.id);
+    expect(mockOd.odBalanceAnnotations[0].purpose).toBe("EMI / Interest");
+  });
+
+  it("should only log payment and not duplicate snapshot if OD balance is already manually logged on due date", () => {
+    const mockLoan: LoanData = {
+      loanDetails: {
+        lender: "Test Bank",
+        accountNumber: "999",
+        sanctionedAmount: 5000000,
+        totalTenureMonths: 180,
+        moratoriumMonths: 12,
+        moratoriumAnchor: "first_disbursement",
+        dueDateDay: 10,
+        dayCountConvention: 365,
+        currentCommunicatedEmi: 50000,
+        policy: {
+          onRateChange: "adjust_tenure",
+          onDisbursementDuringEmi: "adjust_tenure",
+          onPrepayment: "adjust_tenure"
+        }
+      },
+      disbursements: [{ id: "d-1", date: "2026-01-01", amount: 1000000 }],
+      rateHistory: [{ id: "r-1", effectiveDate: "2026-01-01", annualRate: 12 }],
+      odBalanceLog: [
+        { id: "od-1", date: "2026-01-15", balance: 100000 },
+        { id: "od-manual", date: "2026-02-10", balance: 90000 } // Manually logged snapshot
+      ],
+      prepayments: [],
+      paymentLog: []
+    };
+
+    const mockOd: OdSavingsData = {
+      emiReserve: 50000,
+      sources: [],
+      contributions: [],
+      goals: [],
+      odBalanceAnnotations: []
+    };
+
+    const res = autoDeductPayments(mockLoan, mockOd, "2026-02-15");
+    expect(res.loanChanged).toBe(true);
+    expect(res.odChanged).toBe(false); // No annotation or balance changes needed
+
+    // Should create payment entry
+    expect(mockLoan.paymentLog.length).toBe(1);
+    expect(mockLoan.paymentLog[0].dueDate).toBe("2026-02-10");
+
+    // Should NOT create new balance snapshot
+    expect(mockLoan.odBalanceLog.length).toBe(2);
+    expect(mockLoan.odBalanceLog[1].id).toBe("od-manual");
+    expect(mockLoan.odBalanceLog[1].balance).toBe(90000);
   });
 });

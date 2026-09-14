@@ -8,6 +8,7 @@ export const metadata = {
 };
 
 export default async function OdSavingsPage() {
-  const [loanData, odData] = await Promise.all([getLoanData(), getOdSavingsData()]);
+  const loanData = await getLoanData();
+  const odData = await getOdSavingsData();
   return <OdSavingsClient loanData={loanData} odData={odData} />;
 }

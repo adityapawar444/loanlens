@@ -190,9 +190,14 @@ export default function OdSavingsClient({
   // ── EMI reserve constraint metrics ──────────────────────────────────────
   const emiReserve = odData.emiReserve;
 
-  const allocatableBalance = useMemo(
-    () => Math.max(0, latestOdBalance - emiReserve),
+  const fundedEmiReserve = useMemo(
+    () => Math.min(latestOdBalance, emiReserve),
     [latestOdBalance, emiReserve]
+  );
+
+  const allocatableBalance = useMemo(
+    () => latestOdBalance - fundedEmiReserve,
+    [latestOdBalance, fundedEmiReserve]
   );
 
   const totalAllocatedToGoals = useMemo(
@@ -326,8 +331,12 @@ export default function OdSavingsClient({
         />
         <KpiCard
           label="EMI Reserve (Protected)"
-          value={formatter.format(emiReserve)}
-          sub="Always held back — cannot be allocated"
+          value={formatter.format(fundedEmiReserve)}
+          sub={
+            fundedEmiReserve < emiReserve
+              ? `Underfunded (Target: ${formatter.format(emiReserve)})`
+              : "Always held back — cannot be allocated"
+          }
           icon={<Target className="h-4 w-4" />}
           accent="rose"
         />
@@ -387,11 +396,24 @@ export default function OdSavingsClient({
               <div className="h-3 w-3 rounded-full bg-rose-400" />
               <div>
                 <p className="text-sm font-semibold text-rose-800">EMI Reserve <span className="ml-1 rounded-full bg-rose-200 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-rose-700">Protected</span></p>
-                <p className="text-xs text-rose-400">Always held back — covers full monthly EMI</p>
+                <p className="text-xs text-rose-400">
+                  {fundedEmiReserve < emiReserve
+                    ? `Underfunded by ${formatter.format(emiReserve - fundedEmiReserve)} — need deposits`
+                    : "Always held back — covers full monthly EMI"}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <p className="text-base font-semibold text-rose-900">{formatter.format(emiReserve)}</p>
+              <div className="flex flex-col items-end">
+                <p className="text-base font-semibold text-rose-900">
+                  {formatter.format(fundedEmiReserve)}
+                </p>
+                {fundedEmiReserve < emiReserve && (
+                  <p className="text-[10px] text-rose-600 font-medium leading-none mt-0.5">
+                    Target: {formatter.format(emiReserve)}
+                  </p>
+                )}
+              </div>
               {!editingEmiReserve ? (
                 <button
                   onClick={() => { setEmiReserveInput(String(emiReserve)); setEmiReserveError(null); setEditingEmiReserve(true); }}

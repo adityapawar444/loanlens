@@ -1,4 +1,5 @@
 import { AmortizationRow, LoanData, SummaryMetrics } from "./types";
+import { OdSavingsData } from "./od-savings-types";
 
 // Historical due dates where actuals came from PDF statements.
 // We now rely on paymentLog.amountDue and paymentLog.amountPaid for these months.
@@ -294,4 +295,93 @@ export function calculateMetrics(data: LoanData, schedule: AmortizationRow[], to
     disbursedAmount,
     sanctionedAmount: data.loanDetails.sanctionedAmount,
   };
+}
+
+/**
+ * Automatically deducts due payments on the 10th (or configured due date day) of each month.
+ * Modifies loanData and odData in-place.
+ * Returns whether any changes were made to loanData and/or odData.
+ */
+export function autoDeductPayments(
+  loanData: LoanData,
+  odData: OdSavingsData,
+  todayStr: string
+): { loanChanged: boolean; odChanged: boolean } {
+  let loanChanged = false;
+  let odChanged = false;
+
+  // Run a loop to generate schedule and process the first unpaid passed due date.
+  // We break and regenerate the schedule each time because a deduction on date D
+  // affects interest calculations and installment amounts for D+1 onwards.
+  while (true) {
+    const schedule = generateSchedule(loanData);
+    let found = false;
+
+    for (const row of schedule) {
+      if (row.dueDate > todayStr) {
+        break; // Future due date, do not process
+      }
+
+      // Check if this payment is already recorded in the paymentLog
+      const hasPayment = loanData.paymentLog.some((p) => p.dueDate === row.dueDate);
+      if (!hasPayment) {
+        // We found an unpaid due date that is in the past or present!
+        
+        // 1. Add entry to paymentLog
+        loanData.paymentLog.push({
+          id: Math.random().toString(36).slice(2, 11),
+          dueDate: row.dueDate,
+          type: row.phase === "moratorium" ? "pre_emi_interest" : "emi",
+          amountDue: row.installment,
+          amountPaid: row.installment,
+          paidDate: row.dueDate,
+        });
+        loanChanged = true;
+
+        // 2. Add entry to odBalanceLog if no snapshot exists on that exact date
+        const hasOdLog = loanData.odBalanceLog.some((log) => log.date === row.dueDate);
+        if (!hasOdLog) {
+          // Find latest balance before this due date
+          const sortedLogs = [...loanData.odBalanceLog].sort((a, b) =>
+            a.date.localeCompare(b.date)
+          );
+          let prevBalance = 0;
+          for (const log of sortedLogs) {
+            if (log.date < row.dueDate) {
+              prevBalance = log.balance;
+            } else {
+              break;
+            }
+          }
+          const newBalance = Math.max(0, prevBalance - row.installment);
+          const odLogId = Math.random().toString(36).slice(2, 11);
+          
+          loanData.odBalanceLog.push({
+            id: odLogId,
+            date: row.dueDate,
+            balance: newBalance,
+          });
+
+          // 3. Add annotation for the auto-deduction
+          odData.odBalanceAnnotations.push({
+            odBalanceLogId: odLogId,
+            sourceId: null,
+            purpose: "EMI / Interest",
+            note: "Auto-deducted on EMI Day",
+            editHistory: [],
+          });
+          odChanged = true;
+        }
+
+        found = true;
+        break; // Break loop to regenerate schedule and process next due date
+      }
+    }
+
+    if (!found) {
+      break; // No more unpaid due dates in the past/present
+    }
+  }
+
+  return { loanChanged, odChanged };
 }
