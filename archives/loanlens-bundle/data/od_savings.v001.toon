@@ -1,0 +1,52 @@
+emiReserve: 91143
+
+[6] sources
+id:str	name:str	description:nullable_str	isActive:bool	createdAt:str	editHistory:json
+mhk74l284	Aditya	From Salary	1	2026-07-08T09:03:36.884Z	[]
+31q8x1ylm	Neha	Salary	1	2026-07-08T09:03:47.190Z	[]
+x8vq8mh47	Shravi Gifts		1	2026-07-08T09:04:01.164Z	[]
+6ubhl5l4i	Baby Shower Gifts		1	2026-07-08T09:04:13.698Z	[]
+gk0xmn2pr	Previous Savings		1	2026-07-08T09:10:39.616Z	[]
+ywiq7gspf	Marriage Gifts		1	2026-07-08T09:41:53.203Z	[]
+
+[21] contributions
+id:str	date:date	amount:num	sourceId:str	note:nullable_str	editHistory:json
+yyy2fwjqv	2026-05-30	198000	31q8x1ylm		[]
+ja4793cgh	2026-05-31	40000	mhk74l284		[]
+mz5mi6olw	2026-06-10	40000	mhk74l284		[]
+98na4ckwu	2026-07-01	50000	mhk74l284		[]
+voh7exouj	2026-07-08	60000	x8vq8mh47		[]
+9xny9zos1	2026-07-08	50000	mhk74l284		[]
+kkejsoywh	2026-05-01	38000	mhk74l284		[]
+dslf47r3a	2026-04-04	15000	6ubhl5l4i		[]
+1quzg0wss	2026-03-08	38000	mhk74l284		[]
+fn7fwof9j	2026-03-02	38000	mhk74l284		[]
+63d4iwnm1	2026-02-23	129000	ywiq7gspf		[]
+9nmurbscl	2026-02-18	50000	mhk74l284		[]
+3sps48kqa	2026-02-13	11000	6ubhl5l4i		[]
+4o31dl5wa	2026-02-09	50000	mhk74l284		[]
+fq49n7huv	2026-01-31	20000	mhk74l284		[]
+6csvvgm6a	2026-02-23	1000	ywiq7gspf		[]
+53p2br4lz	2026-07-27	45000	mhk74l284		[]
+pifjum5ko	2026-08-02	99000	31q8x1ylm		[]
+efke22231	2026-08-02	129000	mhk74l284		[]
+ma9spnpov	2026-09-01	99000	mhk74l284		[]
+yv5sx5boz	2026-08-30	33	mhk74l284		[]
+
+[6] goals
+id:str	name:str	targetAmount:num	allocatedAmount:num	targetDate:nullable_str	color:str	note:nullable_str	isActive:bool	editHistory:json
+4hsdm8lou	Shravi Future Investments	60000	60000	2026-07-30	#0f766e		1	[{"timestamp":"2026-07-08T09:21:43.847Z","field":"allocatedAmount","oldValue":"0","newValue":"60000"}]
+36oncv1bf	Modular Kitchen	400000	297000	2027-12-31	#2563eb		1	[{"timestamp":"2026-07-08T09:06:19.620Z","field":"color","oldValue":"\"#0f766e\"","newValue":"\"#2563eb\""},{"timestamp":"2026-07-08T09:06:50.293Z","field":"targetAmount","oldValue":"200000","newValue":"400000"},{"timestamp":"2026-07-08T09:21:58.557Z","field":"allocatedAmount","oldValue":"0","newValue":"198000"},{"timestamp":"2026-08-05T04:44:00.908Z","field":"allocatedAmount","oldValue":"198000","newValue":"297000"}]
+2h1qxmtbb	Bedrooms	400000	250000	2027-12-31	#7c3aed		1	[{"timestamp":"2026-07-08T09:20:06.615Z","field":"name","oldValue":"\"Other Furniture\"","newValue":"\"Bedrooms\""},{"timestamp":"2026-07-08T09:20:06.615Z","field":"targetAmount","oldValue":"600000","newValue":"400000"},{"timestamp":"2026-07-08T09:24:38.962Z","field":"allocatedAmount","oldValue":"0","newValue":"91000"},{"timestamp":"2026-08-05T04:49:25.571Z","field":"allocatedAmount","oldValue":"91000","newValue":"191000"},{"timestamp":"2026-08-05T04:52:18.482Z","field":"allocatedAmount","oldValue":"191000","newValue":"241000"},{"timestamp":"2026-09-01T04:43:02.760Z","field":"allocatedAmount","oldValue":"241000","newValue":"250000"}]
+7w6tf7iw7	Living Room	150000	150000	2026-07-31	#f59e0b		1	[{"timestamp":"2026-07-08T09:22:22.286Z","field":"allocatedAmount","oldValue":"0","newValue":"125000"},{"timestamp":"2026-07-08T09:22:47.035Z","field":"allocatedAmount","oldValue":"125000","newValue":"130000"},{"timestamp":"2026-08-05T04:47:23.242Z","field":"allocatedAmount","oldValue":"130000","newValue":"150000"}]
+7rhgoyo2j	Home Decor	200000	62000	2026-07-31	#0891b2		1	[{"timestamp":"2026-07-08T09:24:18.360Z","field":"allocatedAmount","oldValue":"0","newValue":"100000"},{"timestamp":"2026-07-10T14:39:31.821Z","field":"allocatedAmount","oldValue":"100000","newValue":"66000"},{"timestamp":"2026-07-10T14:39:45.083Z","field":"allocatedAmount","oldValue":"66000","newValue":"63000"},{"timestamp":"2026-07-10T14:39:58.868Z","field":"allocatedAmount","oldValue":"63000","newValue":"62000"}]
+luci92pla	Emergency Funds	100000	50000		#e11d48		1	[]
+
+[6] odBalanceAnnotations
+odBalanceLogId:str	sourceId:nullable_str	purpose:str	note:nullable_str	editHistory:json
+la8jgbv9p		savings		[{"timestamp":"2026-07-08T09:10:58.437Z","field":"sourceId","oldValue":"null","newValue":"\"gk0xmn2pr\""},{"timestamp":"2026-07-08T09:24:55.483Z","field":"sourceId","oldValue":"\"gk0xmn2pr\"","newValue":"null"}]
+		savings		[]
+		savings		[]
+aunnkgsop		EMI / Interest	Auto-deducted on EMI Day	[]
+		savings		[]
+ehwea52k7		EMI / Interest	Auto-deducted on EMI Day	[]

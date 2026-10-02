@@ -1,0 +1,560 @@
+{
+  "scenario": "high-prepayment",
+  "description": "₹70,00,000 prepayment on 2027-09-01 — loan near closure",
+  "input": {
+    "loanDetails": {
+      "lender": "Bank of Baroda",
+      "accountNumber": "REDACTED",
+      "sanctionedAmount": 11965000,
+      "totalTenureMonths": 300,
+      "moratoriumMonths": 18,
+      "moratoriumAnchor": "first_disbursement",
+      "dueDateDay": 10,
+      "dayCountConvention": 365,
+      "currentCommunicatedEmi": 91143,
+      "policy": {
+        "onRateChange": "adjust_tenure",
+        "onDisbursementDuringEmi": "adjust_tenure",
+        "onPrepayment": "adjust_tenure"
+      }
+    },
+    "disbursements": [
+      {
+        "id": "init-1",
+        "date": "2026-01-31",
+        "amount": 5982984,
+        "note": "1st tranche"
+      },
+      {
+        "id": "init-2",
+        "date": "2026-06-02",
+        "amount": 438152,
+        "note": "2nd tranche"
+      },
+      {
+        "id": "21ig6mkpq",
+        "date": "2026-07-03",
+        "amount": 664775,
+        "note": "20th Floor"
+      },
+      {
+        "id": "jmdb06x71",
+        "date": "2026-09-17",
+        "amount": 664776,
+        "note": "26th Floor"
+      }
+    ],
+    "rateHistory": [
+      {
+        "id": "rate-1",
+        "effectiveDate": "2026-01-31",
+        "annualRate": 7.6,
+        "benchmark": "RLLR"
+      }
+    ],
+    "odBalanceLog": [
+      {
+        "id": "od-1",
+        "date": "2026-06-10",
+        "balance": 510792
+      },
+      {
+        "id": "i0mczh0g6",
+        "date": "2026-07-01",
+        "balance": 560792
+      },
+      {
+        "id": "la8jgbv9p",
+        "date": "2026-07-08",
+        "balance": 670792
+      },
+      {
+        "id": "3v1rj0se6",
+        "date": "2026-07-10",
+        "balance": 633043
+      },
+      {
+        "id": "0454awabl",
+        "date": "2026-07-27",
+        "balance": 678043
+      },
+      {
+        "id": "0a5llq1qb",
+        "date": "2026-08-02",
+        "balance": 906043
+      },
+      {
+        "id": "aunnkgsop",
+        "date": "2026-08-10",
+        "balance": 864902
+      },
+      {
+        "id": "z1g7aveoj",
+        "date": "2026-09-01",
+        "balance": 963934
+      },
+      {
+        "id": "ehwea52k7",
+        "date": "2026-09-10",
+        "balance": 923964
+      }
+    ],
+    "prepayments": [
+      {
+        "id": "fix-high-prepay-1",
+        "date": "2027-09-01",
+        "amount": 7000000,
+        "note": "Fixture: ₹70,00,000 high prepayment on 2027-09-01"
+      }
+    ],
+    "paymentLog": [
+      {
+        "id": "p-1",
+        "dueDate": "2026-02-10",
+        "type": "pre_emi_interest",
+        "amountDue": 13691,
+        "amountPaid": 13656,
+        "paidDate": "2026-02-10"
+      },
+      {
+        "id": "p-2",
+        "dueDate": "2026-03-10",
+        "type": "pre_emi_interest",
+        "amountDue": 34850,
+        "amountPaid": 33818,
+        "paidDate": "2026-03-10"
+      },
+      {
+        "id": "p-3",
+        "dueDate": "2026-04-10",
+        "type": "pre_emi_interest",
+        "amountDue": 38595,
+        "amountPaid": 36906,
+        "paidDate": "2026-04-10"
+      },
+      {
+        "id": "p-4",
+        "dueDate": "2026-05-10",
+        "type": "pre_emi_interest",
+        "amountDue": 37350,
+        "amountPaid": 35631,
+        "paidDate": "2026-05-10"
+      },
+      {
+        "id": "p-5",
+        "dueDate": "2026-06-10",
+        "type": "pre_emi_interest",
+        "amountDue": 39396,
+        "amountPaid": 37078,
+        "paidDate": "2026-06-10"
+      },
+      {
+        "id": "sezk95xxs",
+        "dueDate": "2026-07-10",
+        "type": "pre_emi_interest",
+        "amountDue": 37749,
+        "amountPaid": 37749,
+        "paidDate": "2026-07-10"
+      },
+      {
+        "id": "684d8qw2q",
+        "dueDate": "2026-08-10",
+        "type": "pre_emi_interest",
+        "amountDue": 41141,
+        "amountPaid": 41141,
+        "paidDate": "2026-08-10"
+      },
+      {
+        "id": "pnyfmr836",
+        "dueDate": "2026-09-10",
+        "type": "pre_emi_interest",
+        "amountDue": 39970,
+        "amountPaid": 39970,
+        "paidDate": "2026-09-10"
+      }
+    ]
+  },
+  "expected_schedule": [
+    {
+      "period": 1,
+      "dueDate": "2026-02-10",
+      "openingBalance": 5982984,
+      "installment": 13656,
+      "interest": 13656,
+      "baselineInterest": 13691,
+      "interestSavings": 35,
+      "principal": 0,
+      "closingBalance": 5982984,
+      "phase": "moratorium",
+      "effectivePrincipal": 5982984
+    },
+    {
+      "period": 2,
+      "dueDate": "2026-03-10",
+      "openingBalance": 5982984,
+      "installment": 33818,
+      "interest": 33818,
+      "baselineInterest": 34850,
+      "interestSavings": 1032,
+      "principal": 0,
+      "closingBalance": 5982984,
+      "phase": "moratorium",
+      "effectivePrincipal": 5982984
+    },
+    {
+      "period": 3,
+      "dueDate": "2026-04-10",
+      "openingBalance": 5982984,
+      "installment": 36906,
+      "interest": 36906,
+      "baselineInterest": 38595,
+      "interestSavings": 1689,
+      "principal": 0,
+      "closingBalance": 5982984,
+      "phase": "moratorium",
+      "effectivePrincipal": 5982984
+    },
+    {
+      "period": 4,
+      "dueDate": "2026-05-10",
+      "openingBalance": 5982984,
+      "installment": 35631,
+      "interest": 35631,
+      "baselineInterest": 37350,
+      "interestSavings": 1719,
+      "principal": 0,
+      "closingBalance": 5982984,
+      "phase": "moratorium",
+      "effectivePrincipal": 5982984
+    },
+    {
+      "period": 5,
+      "dueDate": "2026-06-10",
+      "openingBalance": 6421136,
+      "installment": 37078,
+      "interest": 37078,
+      "baselineInterest": 39396,
+      "interestSavings": 2318,
+      "principal": 0,
+      "closingBalance": 6421136,
+      "phase": "moratorium",
+      "effectivePrincipal": 5910344
+    },
+    {
+      "period": 6,
+      "dueDate": "2026-07-10",
+      "openingBalance": 7085911,
+      "installment": 37749,
+      "interest": 37749,
+      "baselineInterest": 41079,
+      "interestSavings": 3330,
+      "principal": 0,
+      "closingBalance": 7085911,
+      "phase": "moratorium",
+      "effectivePrincipal": 6452868
+    },
+    {
+      "period": 7,
+      "dueDate": "2026-08-10",
+      "openingBalance": 7085911,
+      "installment": 41141,
+      "interest": 41141,
+      "baselineInterest": 45738,
+      "interestSavings": 4597,
+      "principal": 0,
+      "closingBalance": 7085911,
+      "phase": "moratorium",
+      "effectivePrincipal": 6221009
+    },
+    {
+      "period": 8,
+      "dueDate": "2026-09-10",
+      "openingBalance": 7085911,
+      "installment": 39970,
+      "interest": 39970,
+      "baselineInterest": 45738,
+      "interestSavings": 5768,
+      "principal": 0,
+      "closingBalance": 7085911,
+      "phase": "moratorium",
+      "effectivePrincipal": 6161947
+    },
+    {
+      "period": 9,
+      "dueDate": "2026-10-10",
+      "openingBalance": 7750687,
+      "installment": 41675,
+      "interest": 41675,
+      "baselineInterest": 47446,
+      "interestSavings": 5771,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 10,
+      "dueDate": "2026-11-10",
+      "openingBalance": 7750687,
+      "installment": 44065,
+      "interest": 44065,
+      "baselineInterest": 50029,
+      "interestSavings": 5964,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 11,
+      "dueDate": "2026-12-10",
+      "openingBalance": 7750687,
+      "installment": 42644,
+      "interest": 42644,
+      "baselineInterest": 48415,
+      "interestSavings": 5771,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 12,
+      "dueDate": "2027-01-10",
+      "openingBalance": 7750687,
+      "installment": 44065,
+      "interest": 44065,
+      "baselineInterest": 50029,
+      "interestSavings": 5964,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 13,
+      "dueDate": "2027-02-10",
+      "openingBalance": 7750687,
+      "installment": 44065,
+      "interest": 44065,
+      "baselineInterest": 50029,
+      "interestSavings": 5964,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 14,
+      "dueDate": "2027-03-10",
+      "openingBalance": 7750687,
+      "installment": 39801,
+      "interest": 39801,
+      "baselineInterest": 45188,
+      "interestSavings": 5387,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 15,
+      "dueDate": "2027-04-10",
+      "openingBalance": 7750687,
+      "installment": 44065,
+      "interest": 44065,
+      "baselineInterest": 50029,
+      "interestSavings": 5964,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 16,
+      "dueDate": "2027-05-10",
+      "openingBalance": 7750687,
+      "installment": 42644,
+      "interest": 42644,
+      "baselineInterest": 48415,
+      "interestSavings": 5771,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 17,
+      "dueDate": "2027-06-10",
+      "openingBalance": 7750687,
+      "installment": 44065,
+      "interest": 44065,
+      "baselineInterest": 50029,
+      "interestSavings": 5964,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 18,
+      "dueDate": "2027-07-10",
+      "openingBalance": 7750687,
+      "installment": 42644,
+      "interest": 42644,
+      "baselineInterest": 48415,
+      "interestSavings": 5771,
+      "principal": 0,
+      "closingBalance": 7750687,
+      "phase": "moratorium",
+      "effectivePrincipal": 6826723
+    },
+    {
+      "period": 19,
+      "dueDate": "2027-08-10",
+      "openingBalance": 7750687,
+      "installment": 91143,
+      "interest": 44065,
+      "baselineInterest": 50029,
+      "interestSavings": 5964,
+      "principal": 47078,
+      "closingBalance": 7703609,
+      "phase": "emi",
+      "effectivePrincipal": 6779645
+    },
+    {
+      "period": 20,
+      "dueDate": "2027-09-10",
+      "openingBalance": 703609,
+      "installment": 91143,
+      "interest": 31056,
+      "baselineInterest": 36607,
+      "interestSavings": 5551,
+      "principal": 60087,
+      "closingBalance": 643522,
+      "phase": "emi",
+      "effectivePrincipal": 0
+    },
+    {
+      "period": 21,
+      "dueDate": "2027-10-10",
+      "openingBalance": 643522,
+      "installment": 91143,
+      "interest": 0,
+      "baselineInterest": 4020,
+      "interestSavings": 4020,
+      "principal": 91143,
+      "closingBalance": 552379,
+      "phase": "emi",
+      "effectivePrincipal": 0
+    },
+    {
+      "period": 22,
+      "dueDate": "2027-11-10",
+      "openingBalance": 552379,
+      "installment": 91143,
+      "interest": 0,
+      "baselineInterest": 3565,
+      "interestSavings": 3565,
+      "principal": 91143,
+      "closingBalance": 461236,
+      "phase": "emi",
+      "effectivePrincipal": 0
+    },
+    {
+      "period": 23,
+      "dueDate": "2027-12-10",
+      "openingBalance": 461236,
+      "installment": 91143,
+      "interest": 0,
+      "baselineInterest": 2881,
+      "interestSavings": 2881,
+      "principal": 91143,
+      "closingBalance": 370093,
+      "phase": "emi",
+      "effectivePrincipal": 0
+    },
+    {
+      "period": 24,
+      "dueDate": "2028-01-10",
+      "openingBalance": 370093,
+      "installment": 91143,
+      "interest": 0,
+      "baselineInterest": 2389,
+      "interestSavings": 2389,
+      "principal": 91143,
+      "closingBalance": 278950,
+      "phase": "emi",
+      "effectivePrincipal": 0
+    },
+    {
+      "period": 25,
+      "dueDate": "2028-02-10",
+      "openingBalance": 278950,
+      "installment": 91143,
+      "interest": 0,
+      "baselineInterest": 1801,
+      "interestSavings": 1801,
+      "principal": 91143,
+      "closingBalance": 187807,
+      "phase": "emi",
+      "effectivePrincipal": 0
+    },
+    {
+      "period": 26,
+      "dueDate": "2028-03-10",
+      "openingBalance": 187807,
+      "installment": 91143,
+      "interest": 0,
+      "baselineInterest": 1134,
+      "interestSavings": 1134,
+      "principal": 91143,
+      "closingBalance": 96664,
+      "phase": "emi",
+      "effectivePrincipal": 0
+    },
+    {
+      "period": 27,
+      "dueDate": "2028-04-10",
+      "openingBalance": 96664,
+      "installment": 91143,
+      "interest": 0,
+      "baselineInterest": 624,
+      "interestSavings": 624,
+      "principal": 91143,
+      "closingBalance": 5521,
+      "phase": "emi",
+      "effectivePrincipal": 0
+    },
+    {
+      "period": 28,
+      "dueDate": "2028-05-10",
+      "openingBalance": 5521,
+      "installment": 5521,
+      "interest": 0,
+      "baselineInterest": 34,
+      "interestSavings": 34,
+      "principal": 5521,
+      "closingBalance": 0,
+      "phase": "emi",
+      "effectivePrincipal": 0
+    }
+  ],
+  "expected_metrics": {
+    "currentPhase": "moratorium",
+    "outstandingPrincipal": 7750687,
+    "effectivePrincipal": 6826723,
+    "effectiveInterestRate": 6.69,
+    "nextDueDate": "2026-10-10",
+    "nextInstallmentAmount": 41675,
+    "projectedEmi": 91143,
+    "projectedClosureDate": "2028-05-10",
+    "interestPaidToDate": 275949,
+    "principalPaidToDate": 0,
+    "totalInterestProjected": 780803,
+    "interestSavedTillNow": 20488,
+    "interestSavedThisYear": 20488,
+    "disbursedAmount": 7750687,
+    "sanctionedAmount": 11965000
+  }
+}
