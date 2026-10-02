@@ -1,0 +1,38 @@
+loanDetails: {"lender":"Bank of Baroda","accountNumber":"[REDACTED]","sanctionedAmount":11965000,"totalTenureMonths":300,"moratoriumMonths":18,"moratoriumAnchor":"first_disbursement","dueDateDay":10,"dayCountConvention":365,"currentCommunicatedEmi":91143,"policy":{"onRateChange":"adjust_tenure","onDisbursementDuringEmi":"adjust_tenure","onPrepayment":"adjust_tenure"}}
+
+[4] disbursements
+id:str	date:date	amount:num	note:nullable_str
+init-1	2026-01-31	5982984	1st tranche
+init-2	2026-06-02	438152	2nd tranche
+21ig6mkpq	2026-07-03	664775	20th Floor
+jmdb06x71	2026-09-17	664776	26th Floor
+
+[1] rateHistory
+id:str	effectiveDate:date	annualRate:num	benchmark:nullable_str	spread:num
+rate-1	2026-01-31	7.6	RLLR	
+
+[9] odBalanceLog
+id:str	date:date	balance:num
+od-1	2026-06-10	510792
+i0mczh0g6	2026-07-01	560792
+la8jgbv9p	2026-07-08	670792
+3v1rj0se6	2026-07-10	633043
+0454awabl	2026-07-27	678043
+0a5llq1qb	2026-08-02	906043
+aunnkgsop	2026-08-10	864902
+z1g7aveoj	2026-09-01	963934
+ehwea52k7	2026-09-10	923964
+
+[0] prepayments
+id:str	date:date	amount:num	note:nullable_str
+
+[8] paymentLog
+id:str	dueDate:date	type:str	amountDue:num	amountPaid:num	paidDate:date
+p-1	2026-02-10	pre_emi_interest	13691	13656	2026-02-10
+p-2	2026-03-10	pre_emi_interest	34850	33818	2026-03-10
+p-3	2026-04-10	pre_emi_interest	38595	36906	2026-04-10
+p-4	2026-05-10	pre_emi_interest	37350	35631	2026-05-10
+p-5	2026-06-10	pre_emi_interest	39396	37078	2026-06-10
+sezk95xxs	2026-07-10	pre_emi_interest	37749	37749	2026-07-10
+684d8qw2q	2026-08-10	pre_emi_interest	41141	41141	2026-08-10
+pnyfmr836	2026-09-10	pre_emi_interest	39970	39970	2026-09-10

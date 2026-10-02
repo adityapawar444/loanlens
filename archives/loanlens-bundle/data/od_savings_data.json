@@ -1,0 +1,425 @@
+{
+  "emiReserve": 91143,
+  "sources": [
+    {
+      "id": "mhk74l284",
+      "name": "Aditya",
+      "description": "From Salary",
+      "isActive": true,
+      "createdAt": "2026-07-08T09:03:36.884Z",
+      "editHistory": []
+    },
+    {
+      "id": "31q8x1ylm",
+      "name": "Neha",
+      "description": "Salary",
+      "isActive": true,
+      "createdAt": "2026-07-08T09:03:47.190Z",
+      "editHistory": []
+    },
+    {
+      "id": "x8vq8mh47",
+      "name": "Shravi Gifts",
+      "isActive": true,
+      "createdAt": "2026-07-08T09:04:01.164Z",
+      "editHistory": []
+    },
+    {
+      "id": "6ubhl5l4i",
+      "name": "Baby Shower Gifts",
+      "isActive": true,
+      "createdAt": "2026-07-08T09:04:13.698Z",
+      "editHistory": []
+    },
+    {
+      "id": "gk0xmn2pr",
+      "name": "Previous Savings",
+      "isActive": true,
+      "createdAt": "2026-07-08T09:10:39.616Z",
+      "editHistory": []
+    },
+    {
+      "id": "ywiq7gspf",
+      "name": "Marriage Gifts",
+      "isActive": true,
+      "createdAt": "2026-07-08T09:41:53.203Z",
+      "editHistory": []
+    }
+  ],
+  "contributions": [
+    {
+      "id": "yyy2fwjqv",
+      "date": "2026-05-30",
+      "amount": 198000,
+      "sourceId": "31q8x1ylm",
+      "editHistory": []
+    },
+    {
+      "id": "ja4793cgh",
+      "date": "2026-05-31",
+      "amount": 40000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "mz5mi6olw",
+      "date": "2026-06-10",
+      "amount": 40000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "98na4ckwu",
+      "date": "2026-07-01",
+      "amount": 50000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "voh7exouj",
+      "date": "2026-07-08",
+      "amount": 60000,
+      "sourceId": "x8vq8mh47",
+      "editHistory": []
+    },
+    {
+      "id": "9xny9zos1",
+      "date": "2026-07-08",
+      "amount": 50000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "kkejsoywh",
+      "date": "2026-05-01",
+      "amount": 38000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "dslf47r3a",
+      "date": "2026-04-04",
+      "amount": 15000,
+      "sourceId": "6ubhl5l4i",
+      "editHistory": []
+    },
+    {
+      "id": "1quzg0wss",
+      "date": "2026-03-08",
+      "amount": 38000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "fn7fwof9j",
+      "date": "2026-03-02",
+      "amount": 38000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "63d4iwnm1",
+      "date": "2026-02-23",
+      "amount": 129000,
+      "sourceId": "ywiq7gspf",
+      "editHistory": []
+    },
+    {
+      "id": "9nmurbscl",
+      "date": "2026-02-18",
+      "amount": 50000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "3sps48kqa",
+      "date": "2026-02-13",
+      "amount": 11000,
+      "sourceId": "6ubhl5l4i",
+      "editHistory": []
+    },
+    {
+      "id": "4o31dl5wa",
+      "date": "2026-02-09",
+      "amount": 50000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "fq49n7huv",
+      "date": "2026-01-31",
+      "amount": 20000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "6csvvgm6a",
+      "date": "2026-02-23",
+      "amount": 1000,
+      "sourceId": "ywiq7gspf",
+      "editHistory": []
+    },
+    {
+      "id": "53p2br4lz",
+      "date": "2026-07-27",
+      "amount": 45000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "pifjum5ko",
+      "date": "2026-08-02",
+      "amount": 99000,
+      "sourceId": "31q8x1ylm",
+      "editHistory": []
+    },
+    {
+      "id": "efke22231",
+      "date": "2026-08-02",
+      "amount": 129000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "ma9spnpov",
+      "date": "2026-09-01",
+      "amount": 99000,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    },
+    {
+      "id": "yv5sx5boz",
+      "date": "2026-08-30",
+      "amount": 33,
+      "sourceId": "mhk74l284",
+      "editHistory": []
+    }
+  ],
+  "goals": [
+    {
+      "id": "4hsdm8lou",
+      "name": "Shravi Future Investments",
+      "targetAmount": 60000,
+      "allocatedAmount": 60000,
+      "targetDate": "2026-07-30",
+      "color": "#0f766e",
+      "isActive": true,
+      "editHistory": [
+        {
+          "timestamp": "2026-07-08T09:21:43.847Z",
+          "field": "allocatedAmount",
+          "oldValue": "0",
+          "newValue": "60000"
+        }
+      ]
+    },
+    {
+      "id": "36oncv1bf",
+      "name": "Modular Kitchen",
+      "targetAmount": 400000,
+      "allocatedAmount": 297000,
+      "targetDate": "2027-12-31",
+      "color": "#2563eb",
+      "isActive": true,
+      "editHistory": [
+        {
+          "timestamp": "2026-07-08T09:06:19.620Z",
+          "field": "color",
+          "oldValue": "\"#0f766e\"",
+          "newValue": "\"#2563eb\""
+        },
+        {
+          "timestamp": "2026-07-08T09:06:50.293Z",
+          "field": "targetAmount",
+          "oldValue": "200000",
+          "newValue": "400000"
+        },
+        {
+          "timestamp": "2026-07-08T09:21:58.557Z",
+          "field": "allocatedAmount",
+          "oldValue": "0",
+          "newValue": "198000"
+        },
+        {
+          "timestamp": "2026-08-05T04:44:00.908Z",
+          "field": "allocatedAmount",
+          "oldValue": "198000",
+          "newValue": "297000"
+        }
+      ]
+    },
+    {
+      "id": "2h1qxmtbb",
+      "name": "Bedrooms",
+      "targetAmount": 400000,
+      "allocatedAmount": 250000,
+      "targetDate": "2027-12-31",
+      "color": "#7c3aed",
+      "isActive": true,
+      "editHistory": [
+        {
+          "timestamp": "2026-07-08T09:20:06.615Z",
+          "field": "name",
+          "oldValue": "\"Other Furniture\"",
+          "newValue": "\"Bedrooms\""
+        },
+        {
+          "timestamp": "2026-07-08T09:20:06.615Z",
+          "field": "targetAmount",
+          "oldValue": "600000",
+          "newValue": "400000"
+        },
+        {
+          "timestamp": "2026-07-08T09:24:38.962Z",
+          "field": "allocatedAmount",
+          "oldValue": "0",
+          "newValue": "91000"
+        },
+        {
+          "timestamp": "2026-08-05T04:49:25.571Z",
+          "field": "allocatedAmount",
+          "oldValue": "91000",
+          "newValue": "191000"
+        },
+        {
+          "timestamp": "2026-08-05T04:52:18.482Z",
+          "field": "allocatedAmount",
+          "oldValue": "191000",
+          "newValue": "241000"
+        },
+        {
+          "timestamp": "2026-09-01T04:43:02.760Z",
+          "field": "allocatedAmount",
+          "oldValue": "241000",
+          "newValue": "250000"
+        }
+      ]
+    },
+    {
+      "id": "7w6tf7iw7",
+      "name": "Living Room",
+      "targetAmount": 150000,
+      "allocatedAmount": 150000,
+      "targetDate": "2026-07-31",
+      "color": "#f59e0b",
+      "isActive": true,
+      "editHistory": [
+        {
+          "timestamp": "2026-07-08T09:22:22.286Z",
+          "field": "allocatedAmount",
+          "oldValue": "0",
+          "newValue": "125000"
+        },
+        {
+          "timestamp": "2026-07-08T09:22:47.035Z",
+          "field": "allocatedAmount",
+          "oldValue": "125000",
+          "newValue": "130000"
+        },
+        {
+          "timestamp": "2026-08-05T04:47:23.242Z",
+          "field": "allocatedAmount",
+          "oldValue": "130000",
+          "newValue": "150000"
+        }
+      ]
+    },
+    {
+      "id": "7rhgoyo2j",
+      "name": "Home Decor",
+      "targetAmount": 200000,
+      "allocatedAmount": 62000,
+      "targetDate": "2026-07-31",
+      "color": "#0891b2",
+      "isActive": true,
+      "editHistory": [
+        {
+          "timestamp": "2026-07-08T09:24:18.360Z",
+          "field": "allocatedAmount",
+          "oldValue": "0",
+          "newValue": "100000"
+        },
+        {
+          "timestamp": "2026-07-10T14:39:31.821Z",
+          "field": "allocatedAmount",
+          "oldValue": "100000",
+          "newValue": "66000"
+        },
+        {
+          "timestamp": "2026-07-10T14:39:45.083Z",
+          "field": "allocatedAmount",
+          "oldValue": "66000",
+          "newValue": "63000"
+        },
+        {
+          "timestamp": "2026-07-10T14:39:58.868Z",
+          "field": "allocatedAmount",
+          "oldValue": "63000",
+          "newValue": "62000"
+        }
+      ]
+    },
+    {
+      "id": "luci92pla",
+      "name": "Emergency Funds",
+      "targetAmount": 100000,
+      "allocatedAmount": 50000,
+      "color": "#e11d48",
+      "isActive": true,
+      "editHistory": []
+    }
+  ],
+  "odBalanceAnnotations": [
+    {
+      "odBalanceLogId": "la8jgbv9p",
+      "sourceId": null,
+      "purpose": "savings",
+      "editHistory": [
+        {
+          "timestamp": "2026-07-08T09:10:58.437Z",
+          "field": "sourceId",
+          "oldValue": "null",
+          "newValue": "\"gk0xmn2pr\""
+        },
+        {
+          "timestamp": "2026-07-08T09:24:55.483Z",
+          "field": "sourceId",
+          "oldValue": "\"gk0xmn2pr\"",
+          "newValue": "null"
+        }
+      ]
+    },
+    {
+      "odBalanceLogId": "",
+      "sourceId": null,
+      "purpose": "savings",
+      "editHistory": []
+    },
+    {
+      "odBalanceLogId": "",
+      "sourceId": null,
+      "purpose": "savings",
+      "editHistory": []
+    },
+    {
+      "odBalanceLogId": "aunnkgsop",
+      "sourceId": null,
+      "purpose": "EMI / Interest",
+      "note": "Auto-deducted on EMI Day",
+      "editHistory": []
+    },
+    {
+      "odBalanceLogId": "",
+      "sourceId": null,
+      "purpose": "savings",
+      "editHistory": []
+    },
+    {
+      "odBalanceLogId": "ehwea52k7",
+      "sourceId": null,
+      "purpose": "EMI / Interest",
+      "note": "Auto-deducted on EMI Day",
+      "editHistory": []
+    }
+  ]
+}

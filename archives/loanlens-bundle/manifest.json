@@ -1,0 +1,264 @@
+{
+  "bundle_version": "1.0.0",
+  "created": "2026-09-26",
+  "source_commit": "513bbeb",
+  "data_snapshot_date": "2026-09-19",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "3a809c0a99d4fa342a12711311891b778424b0327a46e94a9bcaa6875f45bb78",
+      "bytes": 5606
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "16bf4ba0d55c4ae941ed28b3a631aa7b94810ef747e296deed6f5c7ce09d8a69",
+      "bytes": 5742
+    },
+    {
+      "path": "phase2-runbook.md",
+      "sha256": "5440224865c5cfb36cddc59d419a78dc8a7e7c7eb19d8df206a080ffe5331b21",
+      "bytes": 4809
+    },
+    {
+      "path": "project-instructions.md",
+      "sha256": "39d32931f75bb11457be9e432551d1b237d7737a28f83140b1656f0a2101b280",
+      "bytes": 1463
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "1495b5dd5cc68cccac9616e416cf961f30201907b309161794b00228438e5295",
+      "bytes": 19
+    },
+    {
+      "path": "data/loan_data.json",
+      "sha256": "5afd5e5b05d378f31c748ce221c452449eb2d7119a8c94104adf978b42aef72c",
+      "bytes": 3448
+    },
+    {
+      "path": "data/loan_data.v001.toon",
+      "sha256": "c796ce7e7d260e98636e5c5ccc600c46f11d1bf05737b36ac9b7246a1ffb709a",
+      "bytes": 1612
+    },
+    {
+      "path": "data/od_savings.v001.toon",
+      "sha256": "ff379428a6c5c2da916dd5bb42088229662a3ab140d156da5e87dbc62964aac8",
+      "bytes": 4314
+    },
+    {
+      "path": "data/od_savings_data.json",
+      "sha256": "237bfe10c02c755e7d6de4359963529f0eb7913c9744fde8db64441099452723",
+      "bytes": 9879
+    },
+    {
+      "path": "engine/__init__.py",
+      "sha256": "c04796e22e4e83c157b1d8b9d0941fee33d926df5ac979886395224baf98cd01",
+      "bytes": 763
+    },
+    {
+      "path": "engine/auto_deduct.py",
+      "sha256": "fe284ac6f245830d959639326ee8923149889569204b009e1c6b541db36e1d9c",
+      "bytes": 3584
+    },
+    {
+      "path": "engine/converter.py",
+      "sha256": "7315a754af43aa54b8501a2bcdc635b4d6ebf2352f832bd2799efd8bf0337b78",
+      "bytes": 14695
+    },
+    {
+      "path": "engine/emi.py",
+      "sha256": "e924270cc4a3c376cb81f239d21cbb8c566e48b2ad5d377ea30dc650f854c59f",
+      "bytes": 1392
+    },
+    {
+      "path": "engine/metrics.py",
+      "sha256": "19708bf28905f90c4069c640e247bf0584b00de34f6c1b65b1e28b678efafd94",
+      "bytes": 4260
+    },
+    {
+      "path": "engine/operations.py",
+      "sha256": "669d7bcdb644ba34df7da9d63d776e2fc8504c20d07f5df612b7cc4b42bb000e",
+      "bytes": 38609
+    },
+    {
+      "path": "engine/renderer.py",
+      "sha256": "19f45487e4c30199570048b5b4d44da185bdf792d7c59605a766b22567fdcb20",
+      "bytes": 19064
+    },
+    {
+      "path": "engine/schedule.py",
+      "sha256": "a401929da46e7e16828b8ee06dcea55d35a12393d79daba055748650db09893a",
+      "bytes": 11172
+    },
+    {
+      "path": "engine/types.py",
+      "sha256": "4d8e276d8d702fa61da50b1499faeb4ddbbd62e23e7016d739275a4a42e37c07",
+      "bytes": 4392
+    },
+    {
+      "path": "fixtures/base.json",
+      "sha256": "e2377bd514005708ad224757ea051291b93458cda1ce08338e1c342397ae134f",
+      "bytes": 47670
+    },
+    {
+      "path": "fixtures/disbursement-during-emi.json",
+      "sha256": "1b8be753b9350c76a8a132c4dae634b35b947c1b2ec2b1ac0e2116cc1d9f141e",
+      "bytes": 55212
+    },
+    {
+      "path": "fixtures/high-prepayment.json",
+      "sha256": "52983276cc9f06695716ec1dafa5ed1e1029a9ea261bbe0f0932631518a564eb",
+      "bytes": 13838
+    },
+    {
+      "path": "fixtures/moratorium-boundary.json",
+      "sha256": "d1b7542c0f55e31d17c8a128e00ab2dda621a838d88777b1bf4299d0ffe63618",
+      "bytes": 47744
+    },
+    {
+      "path": "fixtures/od-change.json",
+      "sha256": "cd84be1ca6f2a4c1254097944f8c7d61658f267420cfaa5dcdf32b6b28efc0c3",
+      "bytes": 45760
+    },
+    {
+      "path": "fixtures/prepayment.json",
+      "sha256": "8dec0ca415991a567e0d8f8f441958d8f5c4a2b739b48f236c8b3a026b46f07c",
+      "bytes": 44221
+    },
+    {
+      "path": "fixtures/rate-change.json",
+      "sha256": "af5ea317bbf81054912636e3d112077d5bfc83f306ae8a8af680f6427b9dbe84",
+      "bytes": 46520
+    },
+    {
+      "path": "fixtures/zero-od.json",
+      "sha256": "9c48a5b0bcfdc8e8b63c59bc74499bd3df45b51249c7292cec1012e58b4f4e5e",
+      "bytes": 49833
+    },
+    {
+      "path": "reports/ledger_20260919.md",
+      "sha256": "5b46f38f066ff8b2fadfee332af5e332fad3788957334756ea88a34d70c0ed14",
+      "bytes": 1371
+    },
+    {
+      "path": "reports/od_savings_20260919.md",
+      "sha256": "eddf150138e1bbb516a31f9fdb61b5d1bfcd25d744d761642568d2d58b5931b2",
+      "bytes": 1220
+    },
+    {
+      "path": "reports/schedule_20260919.md",
+      "sha256": "5a3d26232df7440f66d9770207bdefd210178a01d76a9c5b10ae6e5f256a87f9",
+      "bytes": 1505
+    },
+    {
+      "path": "reports/summary_20260919.md",
+      "sha256": "df0da833d83a10b698bbb8e5c091016b22bbbdbffed9a12440000d3ebfb8bcaf",
+      "bytes": 788
+    },
+    {
+      "path": "spec/logic-spec.md",
+      "sha256": "c3088ad014a187ebbfdbc1209fb1df2c106ddd93ea0809106cf9941167108081",
+      "bytes": 31129
+    },
+    {
+      "path": "spec/schemas.md",
+      "sha256": "52671492dfded1a7bc21b803f0fa4484798c02336bbf78b54c4f2b59e037fc46",
+      "bytes": 23598
+    },
+    {
+      "path": "tests/__init__.py",
+      "sha256": "83285b117edb0cbf6590a86da3b0cd3b8e09f7aa8648c84af9dceaca016d2021",
+      "bytes": 25
+    },
+    {
+      "path": "tests/test_converter.py",
+      "sha256": "5397e17b0413fa7c1fa5416b4e2228d5e36dabef2ecf1fb1f98495da386e222c",
+      "bytes": 15572
+    },
+    {
+      "path": "tests/test_operations.py",
+      "sha256": "0cd35bb11c2c7a9aaae081e9623b8f1c030a5f871abe839d096e5370928e39dd",
+      "bytes": 34460
+    },
+    {
+      "path": "tests/test_parity.py",
+      "sha256": "81fb28263532817bdac471343d72e022ab2d31409b693ac0ab096ae4159ac7e6",
+      "bytes": 5189
+    },
+    {
+      "path": "tests/test_renderer.py",
+      "sha256": "5116dbfdaf74b1eca57041381b5eefb164045c1712acb29a84de107260ca85d3",
+      "bytes": 21652
+    }
+  ],
+  "fixture_scenarios": [
+    "base",
+    "prepayment",
+    "rate-change",
+    "od-change",
+    "disbursement-during-emi",
+    "moratorium-boundary",
+    "zero-od",
+    "high-prepayment"
+  ],
+  "parity_status": "all_passing",
+  "token_measurements": {
+    "method": "len(text) / 4 (cl100k_base conservative estimate)",
+    "artifacts": {
+      "data/loan_data.v001.toon": {
+        "chars": 1612,
+        "tokens_estimate": 403.0,
+        "budget": null,
+        "within_budget": null
+      },
+      "data/od_savings.v001.toon": {
+        "chars": 4314,
+        "tokens_estimate": 1078.5,
+        "budget": null,
+        "within_budget": null
+      },
+      "reports/summary_20260919.md": {
+        "chars": 746,
+        "tokens_estimate": 186.5,
+        "budget": 400,
+        "within_budget": true
+      },
+      "reports/od_savings_20260919.md": {
+        "chars": 1132,
+        "tokens_estimate": 283.0,
+        "budget": 600,
+        "within_budget": true
+      },
+      "reports/schedule_20260919.md": {
+        "chars": 1355,
+        "tokens_estimate": 338.8,
+        "budget": 800,
+        "within_budget": true
+      },
+      "reports/ledger_20260919.md": {
+        "chars": 1282,
+        "tokens_estimate": 320.5,
+        "budget": 500,
+        "within_budget": true
+      },
+      "SKILL.md": {
+        "chars": 5704,
+        "tokens_estimate": 1426.0,
+        "budget": null,
+        "within_budget": null
+      },
+      "project-instructions.md": {
+        "chars": 1452,
+        "tokens_estimate": 363.0,
+        "budget": null,
+        "within_budget": null
+      }
+    },
+    "totals": {
+      "toon_bytes": 5926,
+      "toon_tokens_estimate": 1481.5,
+      "json_equivalent_bytes": 13327,
+      "json_equivalent_tokens_estimate": 3331.8,
+      "toon_vs_json_ratio": 0.44
+    }
+  }
+}

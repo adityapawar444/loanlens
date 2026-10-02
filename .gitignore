@@ -1,5 +1,5 @@
 # ─── Dependencies ─────────────────────────────────────────────────────────────
-/node_modules
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -9,7 +9,7 @@
 !.yarn/versions
 
 # ─── Next.js ──────────────────────────────────────────────────────────────────
-/.next/
+.next/
 /out/
 /build
 
@@ -53,6 +53,11 @@ data/od_savings_data.json
 .gemini/
 CLAUDE.md
 AGENTS.md
+
+# ─── Python ───────────────────────────────────────────────────────────────────
+venv/
+__pycache__/
+.pytest_cache/
 
 # ─── Project: planning artefacts (optional — remove to track them) ────────────
 home-loan-dashboard-plan.md

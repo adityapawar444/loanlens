@@ -1,0 +1,176 @@
+{
+  "loanDetails": {
+    "lender": "Bank of Baroda",
+    "accountNumber": "83990600004041",
+    "sanctionedAmount": 11965000,
+    "totalTenureMonths": 300,
+    "moratoriumMonths": 18,
+    "moratoriumAnchor": "first_disbursement",
+    "dueDateDay": 10,
+    "dayCountConvention": 365,
+    "currentCommunicatedEmi": 91143,
+    "policy": {
+      "onRateChange": "adjust_tenure",
+      "onDisbursementDuringEmi": "adjust_tenure",
+      "onPrepayment": "adjust_tenure"
+    }
+  },
+  "disbursements": [
+    {
+      "id": "init-1",
+      "date": "2026-01-31",
+      "amount": 5982984,
+      "note": "1st tranche"
+    },
+    {
+      "id": "init-2",
+      "date": "2026-06-02",
+      "amount": 438152,
+      "note": "2nd tranche"
+    },
+    {
+      "id": "21ig6mkpq",
+      "date": "2026-07-03",
+      "amount": 664775,
+      "note": "20th Floor"
+    },
+    {
+      "id": "jmdb06x71",
+      "date": "2026-09-17",
+      "amount": 664776,
+      "note": "26th Floor"
+    }
+  ],
+  "rateHistory": [
+    {
+      "id": "rate-1",
+      "effectiveDate": "2026-01-31",
+      "annualRate": 7.6,
+      "benchmark": "RLLR"
+    }
+  ],
+  "odBalanceLog": [
+    {
+      "id": "od-1",
+      "date": "2026-06-10",
+      "balance": 510792
+    },
+    {
+      "id": "i0mczh0g6",
+      "date": "2026-07-01",
+      "balance": 560792
+    },
+    {
+      "id": "la8jgbv9p",
+      "date": "2026-07-08",
+      "balance": 670792
+    },
+    {
+      "id": "3v1rj0se6",
+      "date": "2026-07-10",
+      "balance": 633043
+    },
+    {
+      "id": "0454awabl",
+      "date": "2026-07-27",
+      "balance": 678043
+    },
+    {
+      "id": "0a5llq1qb",
+      "date": "2026-08-02",
+      "balance": 906043
+    },
+    {
+      "id": "aunnkgsop",
+      "date": "2026-08-10",
+      "balance": 864902
+    },
+    {
+      "id": "z1g7aveoj",
+      "date": "2026-09-01",
+      "balance": 963934
+    },
+    {
+      "id": "ehwea52k7",
+      "date": "2026-09-10",
+      "balance": 923964
+    },
+    {
+      "id": "guxr577zd",
+      "date": "2026-09-19",
+      "balance": 924005
+    },
+    {
+      "id": "vk2scudw6",
+      "date": "2026-10-01",
+      "balance": 1122005
+    }
+  ],
+  "prepayments": [],
+  "paymentLog": [
+    {
+      "id": "p-1",
+      "dueDate": "2026-02-10",
+      "type": "pre_emi_interest",
+      "amountDue": 13691,
+      "amountPaid": 13656,
+      "paidDate": "2026-02-10"
+    },
+    {
+      "id": "p-2",
+      "dueDate": "2026-03-10",
+      "type": "pre_emi_interest",
+      "amountDue": 34850,
+      "amountPaid": 33818,
+      "paidDate": "2026-03-10"
+    },
+    {
+      "id": "p-3",
+      "dueDate": "2026-04-10",
+      "type": "pre_emi_interest",
+      "amountDue": 38595,
+      "amountPaid": 36906,
+      "paidDate": "2026-04-10"
+    },
+    {
+      "id": "p-4",
+      "dueDate": "2026-05-10",
+      "type": "pre_emi_interest",
+      "amountDue": 37350,
+      "amountPaid": 35631,
+      "paidDate": "2026-05-10"
+    },
+    {
+      "id": "p-5",
+      "dueDate": "2026-06-10",
+      "type": "pre_emi_interest",
+      "amountDue": 39396,
+      "amountPaid": 37078,
+      "paidDate": "2026-06-10"
+    },
+    {
+      "id": "sezk95xxs",
+      "dueDate": "2026-07-10",
+      "type": "pre_emi_interest",
+      "amountDue": 37749,
+      "amountPaid": 37749,
+      "paidDate": "2026-07-10"
+    },
+    {
+      "id": "684d8qw2q",
+      "dueDate": "2026-08-10",
+      "type": "pre_emi_interest",
+      "amountDue": 41141,
+      "amountPaid": 41141,
+      "paidDate": "2026-08-10"
+    },
+    {
+      "id": "pnyfmr836",
+      "dueDate": "2026-09-10",
+      "type": "pre_emi_interest",
+      "amountDue": 39970,
+      "amountPaid": 39970,
+      "paidDate": "2026-09-10"
+    }
+  ]
+}
