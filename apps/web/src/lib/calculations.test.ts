@@ -152,7 +152,7 @@ describe("Financial Calculations", () => {
       },
       disbursements: [{ id: "d-1", date: "2026-01-01", amount: 1000000 }],
       rateHistory: [{ id: "r-1", effectiveDate: "2026-01-01", annualRate: 12 }],
-      odBalanceLog: [{ id: "od-1", date: "2026-01-15", balance: 100000 }],
+      odBalanceLog: [],
       prepayments: [],
       paymentLog: []
     };
@@ -160,7 +160,7 @@ describe("Financial Calculations", () => {
     const mockOd: OdSavingsData = {
       emiReserve: 50000,
       sources: [],
-      contributions: [],
+      contributions: [{ id: "c1", date: "2026-01-15", amount: 100000, sourceId: "s1" } as any],
       goals: [],
       odBalanceAnnotations: []
     };
@@ -182,14 +182,9 @@ describe("Financial Calculations", () => {
     expect(newSnapshot).toBeDefined();
     // 100000 - interest (1,000,000 * 12% * 31 / 365 = ~10192) = ~89808
     expect(newSnapshot?.balance).toBeCloseTo(100000 - mockLoan.paymentLog[0].amountPaid, 1);
-
-    // Should create an annotation
-    expect(mockOd.odBalanceAnnotations.length).toBe(1);
-    expect(mockOd.odBalanceAnnotations[0].odBalanceLogId).toBe(newSnapshot?.id);
-    expect(mockOd.odBalanceAnnotations[0].purpose).toBe("EMI / Interest");
   });
 
-  it("should only log payment and not duplicate snapshot if OD balance is already manually logged on due date", () => {
+  it("should recalculate OD balance dynamically on passed due dates", () => {
     const mockLoan: LoanData = {
       loanDetails: {
         lender: "Test Bank",
@@ -209,10 +204,7 @@ describe("Financial Calculations", () => {
       },
       disbursements: [{ id: "d-1", date: "2026-01-01", amount: 1000000 }],
       rateHistory: [{ id: "r-1", effectiveDate: "2026-01-01", annualRate: 12 }],
-      odBalanceLog: [
-        { id: "od-1", date: "2026-01-15", balance: 100000 },
-        { id: "od-manual", date: "2026-02-10", balance: 90000 } // Manually logged snapshot
-      ],
+      odBalanceLog: [],
       prepayments: [],
       paymentLog: []
     };
@@ -220,22 +212,17 @@ describe("Financial Calculations", () => {
     const mockOd: OdSavingsData = {
       emiReserve: 50000,
       sources: [],
-      contributions: [],
+      contributions: [{ id: "c1", date: "2026-01-15", amount: 100000, sourceId: "s1" } as any],
       goals: [],
       odBalanceAnnotations: []
     };
 
     const res = autoDeductPayments(mockLoan, mockOd, "2026-02-15");
     expect(res.loanChanged).toBe(true);
-    expect(res.odChanged).toBe(false); // No annotation or balance changes needed
+    expect(res.odChanged).toBe(true); // OD changed because odBalanceAnnotations was cleared
 
     // Should create payment entry
     expect(mockLoan.paymentLog.length).toBe(1);
     expect(mockLoan.paymentLog[0].dueDate).toBe("2026-02-10");
-
-    // Should NOT create new balance snapshot
-    expect(mockLoan.odBalanceLog.length).toBe(2);
-    expect(mockLoan.odBalanceLog[1].id).toBe("od-manual");
-    expect(mockLoan.odBalanceLog[1].balance).toBe(90000);
   });
 });

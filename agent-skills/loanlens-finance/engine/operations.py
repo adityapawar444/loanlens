@@ -167,73 +167,15 @@ def validate_invariants(loan: LoanData, od: OdSavingsData) -> None:
 def update_od_balance(
     loan_data: LoanData,
     od_data: OdSavingsData,
+    today_date: str,
     date: str,
     balance: float,
-    today_date: str,
     source_id: Optional[str] = None,
     purpose: Optional[str] = None,
     note: Optional[str] = None,
     commit: bool = False,
 ) -> dict:
-    """
-    W1: Update OD balance for a given date.
-
-    Adds a new entry to odBalanceLog and creates an OdBalanceAnnotation
-    with an initial editHistory entry.
-    """
-    _validate_date(date, "date")
-    _validate_date(today_date, "today_date")
-    _validate_amount(balance, "balance", allow_zero=True)
-
-    # Validate source_id if given
-    if source_id is not None:
-        source_ids = {s.id for s in od_data.sources}
-        if source_id not in source_ids:
-            raise ValueError(f"source_id {repr(source_id)} not found in sources")
-
-    warnings: list[str] = []
-
-    # Dry-run on copies
-    new_loan = copy.deepcopy(loan_data)
-    new_od = copy.deepcopy(od_data)
-
-    od_log_id = _new_id()
-    new_loan.odBalanceLog.append(
-        OdBalanceLog(id=od_log_id, date=date, balance=balance)
-    )
-
-    annotation = OdBalanceAnnotation(
-        odBalanceLogId=od_log_id,
-        sourceId=source_id,
-        purpose=purpose or "savings",
-        note=note,
-        editHistory=[
-            AuditRecord(
-                timestamp=_now_iso(),
-                field="balance",
-                oldValue="",
-                newValue=str(balance),
-            )
-        ],
-    )
-    new_od.odBalanceAnnotations.append(annotation)
-
-    # Over-allocation check
-    allocated = _total_allocated(new_od)
-    if allocated > balance:
-        warnings.append(
-            f"Over-allocated: goals total {_format_inr(allocated)} exceeds new OD balance {_format_inr(balance)}"
-        )
-
-    impact = _impact_summary("update_od_balance", f"date={date}, balance={_format_inr(balance)}", loan_data, new_loan, today_date, warnings)
-
-    if commit:
-        loan_data.odBalanceLog.append(
-            OdBalanceLog(id=od_log_id, date=date, balance=balance)
-        )
-        od_data.odBalanceAnnotations.append(annotation)
-
-    return impact
+    raise ValueError("OD Balance is now strictly derived from Contributions and Payments. Please use add_contribution instead.")
 
 
 # ---------------------------------------------------------------------------
@@ -388,66 +330,40 @@ def add_rate_change(
 
 def update_payment(
     loan_data: LoanData,
+    od_data: OdSavingsData,
     today_date: str,
     due_date: str,
     amount_paid: Optional[float] = None,
     amount_due: Optional[float] = None,
     commit: bool = False,
 ) -> dict:
-    """
-    W5: Update an existing payment log entry, or add one if it doesn't exist.
-    """
-    _validate_date(due_date, "due_date")
-    _validate_date(today_date, "today_date")
-
+    new_loan = copy.deepcopy(loan_data)
+    payment = next((p for p in new_loan.paymentLog if p.dueDate == due_date), None)
+    
+    if not payment:
+        raise ValueError(f"No payment log found for {due_date}")
+        
     if amount_paid is not None:
         _validate_amount(amount_paid, "amount_paid")
+        payment.amountPaid = amount_paid
     if amount_due is not None:
         _validate_amount(amount_due, "amount_due")
+        payment.amountDue = amount_due
+        
+    sync_od_balance_log(new_loan, od_data)
 
-    new_loan = copy.deepcopy(loan_data)
-
-    existing = next((p for p in new_loan.paymentLog if p.dueDate == due_date), None)
-
-    if existing is not None:
-        if amount_paid is not None:
-            existing.amountPaid = amount_paid
-        if amount_due is not None:
-            existing.amountDue = amount_due
-    else:
-        # Generate a new payment log entry using schedule data
-        schedule = generate_schedule(new_loan, today_date)
-        row = next((r for r in schedule if r.dueDate == due_date), None)
-        phase_type = "pre_emi_interest"
-        installment_amount = 0.0
-        if row:
-            phase_type = "pre_emi_interest" if row.phase == "moratorium" else "emi"
-            installment_amount = row.installment
-
-        new_loan.paymentLog.append(
-            PaymentLog(
-                id=_new_id(),
-                dueDate=due_date,
-                type=phase_type,
-                amountDue=amount_due if amount_due is not None else installment_amount,
-                amountPaid=amount_paid if amount_paid is not None else installment_amount,
-                paidDate=due_date,
-            )
-        )
-
-    impact = _impact_summary("update_payment", f"due_date={due_date}", loan_data, new_loan, today_date)
+    impact = _impact_summary(
+        "update_payment",
+        f"due_date={due_date}, amount_paid={amount_paid}, amount_due={amount_due}",
+        loan_data,
+        new_loan,
+        today_date,
+        []
+    )
 
     if commit:
-        existing_orig = next((p for p in loan_data.paymentLog if p.dueDate == due_date), None)
-        if existing_orig is not None:
-            if amount_paid is not None:
-                existing_orig.amountPaid = amount_paid
-            if amount_due is not None:
-                existing_orig.amountDue = amount_due
-        else:
-            # Copy the newly added entry from new_loan
-            new_entry = next(p for p in new_loan.paymentLog if p.dueDate == due_date)
-            loan_data.paymentLog.append(copy.deepcopy(new_entry))
+        loan_data.paymentLog = new_loan.paymentLog
+        sync_od_balance_log(loan_data, od_data)
 
     return impact
 
@@ -825,6 +741,7 @@ def edit_goal(
 # ---------------------------------------------------------------------------
 
 def add_contribution(
+    loan_data: LoanData,
     od_data: OdSavingsData,
     date: str,
     amount: float,
@@ -833,11 +750,6 @@ def add_contribution(
     note: Optional[str] = None,
     commit: bool = False,
 ) -> dict:
-    """
-    W11: Add a new contribution to OD savings.
-
-    Validates source exists and amount > 0.
-    """
     _validate_date(date, "date")
     _validate_date(today_date, "today_date")
     _validate_amount(amount, "amount")
@@ -862,15 +774,24 @@ def add_contribution(
         ],
     )
 
-    impact = {
-        "operation": "add_contribution",
-        "input_description": f"date={date}, amount={_format_inr(amount)}, source={repr(source.name)}",
-        "created": new_contribution.model_dump(),
-        "warnings": [],
-    }
+    new_od = copy.deepcopy(od_data)
+    new_od.contributions.append(new_contribution)
+    
+    new_loan = copy.deepcopy(loan_data)
+    sync_od_balance_log(new_loan, new_od)
+
+    impact = _impact_summary(
+        "add_contribution",
+        f"date={date}, amount={_format_inr(amount)}, source={repr(source.name)}",
+        loan_data,
+        new_loan,
+        today_date,
+        []
+    )
 
     if commit:
         od_data.contributions.append(new_contribution)
+        sync_od_balance_log(loan_data, od_data)
 
     return impact
 
@@ -880,63 +801,44 @@ def add_contribution(
 # ---------------------------------------------------------------------------
 
 def edit_contribution(
+    loan_data: LoanData,
     od_data: OdSavingsData,
     contribution_id: str,
     patch: dict,
+    today_date: str,
     commit: bool = False,
 ) -> dict:
-    """
-    W12: Edit an existing contribution.
-
-    patch keys: date, amount, sourceId, note
-    Appends to editHistory for each changed field.
-    """
     contrib = next((c for c in od_data.contributions if c.id == contribution_id), None)
-    if contrib is None:
-        raise ValueError(f"Contribution with id={repr(contribution_id)} not found")
-
-    allowed_fields = {"date", "amount", "sourceId", "note"}
-    invalid_fields = set(patch.keys()) - allowed_fields
-    if invalid_fields:
-        raise ValueError(f"Invalid patch fields: {invalid_fields}")
-
-    if "amount" in patch:
-        _validate_amount(patch["amount"], "amount")
-    if "date" in patch:
-        _validate_date(patch["date"], "date")
-    if "sourceId" in patch:
-        source = next((s for s in od_data.sources if s.id == patch["sourceId"]), None)
-        if source is None:
-            raise ValueError(f"Source with id={repr(patch['sourceId'])} not found")
+    if not contrib:
+        raise ValueError("Contribution not found")
 
     new_od = copy.deepcopy(od_data)
     new_contrib = next(c for c in new_od.contributions if c.id == contribution_id)
-    audit: list[AuditRecord] = []
+    
+    audit_records = []
+    for k, v in patch.items():
+        if hasattr(new_contrib, k):
+            old_v = getattr(new_contrib, k)
+            if old_v != v:
+                audit_records.append(AuditRecord(timestamp=_now_iso(), field=k, oldValue=str(old_v), newValue=str(v)))
+            setattr(new_contrib, k, v)
+    new_contrib.editHistory.extend(audit_records)
 
-    for field, new_val in patch.items():
-        # Map snake_case patch keys to camelCase model fields
-        model_field = {"sourceId": "sourceId"}.get(field, field)
-        old_val = getattr(new_contrib, model_field)
-        if old_val != new_val:
-            audit.append(_audit_record(field, old_val, new_val))
-            setattr(new_contrib, model_field, new_val)
+    new_loan = copy.deepcopy(loan_data)
+    sync_od_balance_log(new_loan, new_od)
 
-    new_contrib.editHistory.extend(audit)
-
-    impact = {
-        "operation": "edit_contribution",
-        "input_description": f"contribution_id={repr(contribution_id)}, patch={patch}",
-        "before": contrib.model_dump(),
-        "after": new_contrib.model_dump(),
-        "changes": len(audit),
-        "warnings": [],
-    }
+    impact = _impact_summary(
+        "edit_contribution",
+        f"id={contribution_id}, patch={patch}",
+        loan_data,
+        new_loan,
+        today_date,
+        []
+    )
 
     if commit:
-        for rec in audit:
-            contrib.editHistory.append(rec)
-        for field, new_val in patch.items():
-            setattr(contrib, field, new_val)
+        od_data.contributions = new_od.contributions
+        sync_od_balance_log(loan_data, od_data)
 
     return impact
 

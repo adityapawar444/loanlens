@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { readOdData, writeOdData } from "./od-savings-data-layer";
 import { readData, writeData } from "./data-layer";
+import { syncOdBalanceLog } from "./sync-od-balance";
 import {
   OdSource,
   OdGoal,
@@ -159,10 +160,15 @@ export async function addContribution(
     return { success: false, error: parse.error.issues[0]?.message ?? "Invalid amount." };
   }
   const data = await readOdData();
+  const loanData = await readData();
   const full: OdContribution = { ...contribution, editHistory: [] };
   data.contributions.push(full);
+  
+  syncOdBalanceLog(loanData, data);
+  await writeData(loanData);
   await writeOdData(data);
   revalidatePath("/od-savings");
+  revalidatePath("/");
   return { success: true };
 }
 
@@ -177,6 +183,7 @@ export async function editContribution(
     }
   }
   const data = await readOdData();
+  const loanData = await readData();
   const contribution = data.contributions.find((c) => c.id === id);
   if (!contribution) return { success: false, error: "Contribution not found." };
 
@@ -186,64 +193,12 @@ export async function editContribution(
   );
   Object.assign(contribution, patch);
   contribution.editHistory.push(...audit);
+  
+  syncOdBalanceLog(loanData, data);
+  await writeData(loanData);
   await writeOdData(data);
   revalidatePath("/od-savings");
-  return { success: true };
-}
-
-// ─── OD Balance (with annotation) ────────────────────────────────────────────
-
-export async function addOdBalanceWithAnnotation(
-  balanceEntry: { id: string; date: string; balance: number },
-  annotation: Omit<OdBalanceAnnotation, "editHistory">
-): Promise<ActionResult> {
-  const parse = NonNegativeMoneySchema.safeParse(balanceEntry.balance);
-  if (!parse.success) {
-    return { success: false, error: parse.error.issues[0]?.message ?? "Invalid balance." };
-  }
-  if (!balanceEntry.date) return { success: false, error: "Date is required." };
-
-  const loanData = await readData();
-  loanData.odBalanceLog.push(balanceEntry);
-  await writeData(loanData);
-
-  const odData = await readOdData();
-  odData.odBalanceAnnotations.push({ ...annotation, editHistory: [] });
-  await writeOdData(odData);
-
-  revalidatePath("/od-savings");
-  revalidatePath("/ledger");
   revalidatePath("/");
   return { success: true };
 }
 
-export async function editOdBalanceAnnotation(
-  odBalanceLogId: string,
-  patch: Partial<Pick<OdBalanceAnnotation, "sourceId" | "purpose" | "note">>
-): Promise<ActionResult> {
-  const data = await readOdData();
-  let annotation = data.odBalanceAnnotations.find(
-    (a) => a.odBalanceLogId === odBalanceLogId
-  );
-
-  if (!annotation) {
-    // Auto-create annotation for entries added from the Ledger screen
-    annotation = {
-      odBalanceLogId,
-      sourceId: null,
-      purpose: "savings",
-      editHistory: [],
-    };
-    data.odBalanceAnnotations.push(annotation);
-  }
-
-  const audit = diffAudit(
-    annotation as Record<string, unknown>,
-    patch as Record<string, unknown>
-  );
-  Object.assign(annotation, patch);
-  annotation.editHistory.push(...audit);
-  await writeOdData(data);
-  revalidatePath("/od-savings");
-  return { success: true };
-}

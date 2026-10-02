@@ -124,7 +124,6 @@ Present the rendered report or the mutation result to the user.
 
 | ID | Function | Description | Confirm? |
 |----|----------|-------------|----------|
-| W1 | `update_od_balance(loan, od, date, balance, ...)` | Record a new OD balance snapshot | Auto |
 | W2 | `add_disbursement(loan, date, amount, ...)` | Add a loan tranche disbursement | If >₹10L or nearing sanctioned |
 | W3 | `add_prepayment(loan, date, amount, ...)` | Record a lump-sum prepayment | Always (shows tenure/interest impact) |
 | W4 | `add_rate_change(loan, effective_date, rate, ...)` | Add a new interest rate effective date | Always (shows EMI/tenure impact) |
@@ -136,7 +135,6 @@ Present the rendered report or the mutation result to the user.
 | W10 | `edit_goal(od, goal_id, patch)` | Edit a savings goal | If allocation change causes over-allocation |
 | W11 | `add_contribution(od, date, amount, source_id, ...)` | Record a contribution to OD | Auto |
 | W12 | `edit_contribution(od, contribution_id, patch)` | Edit a past contribution | Auto |
-| W13 | `edit_od_annotation(od, od_balance_log_id, ...)` | Annotate an OD balance entry | Auto |
 | W14 | `process_due_payments(loan, od, today_date)` | Auto-deduct due EMI/interest from OD | Always (shows deduction details) |
 | W15 | `update_settings(loan, patch)` | Update loan settings (due day, policy, etc.) | Always (shows before/after) |
 

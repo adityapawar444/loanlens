@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 
 def create_zip(version: str):
-    source_dir = "agent-skills/loanlens-finance"
+    source_dir = "../agent-skills/loanlens-finance"
     out_dir = Path("archives")
     out_dir.mkdir(exist_ok=True)
     

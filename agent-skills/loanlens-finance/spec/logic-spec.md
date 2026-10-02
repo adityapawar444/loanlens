@@ -476,26 +476,9 @@ while true:
             })
             loanChanged = true
 
-            // 2. Create OD balance snapshot (if none exists on that date)
-            if NO odBalanceLog entry has date == row.dueDate:
-                prevBalance = latest odBalanceLog.balance where date < row.dueDate (else 0)
-                newBalance = max(0, prevBalance - row.installment)
-
-                loanData.odBalanceLog.push({
-                    id:      odLogId,
-                    date:    row.dueDate,
-                    balance: newBalance,
-                })
-
-                // 3. Create OD balance annotation
-                odData.odBalanceAnnotations.push({
-                    odBalanceLogId: odLogId,
-                    sourceId:       null,
-                    purpose:        "EMI / Interest",
-                    note:           "Auto-deducted on EMI Day",
-                    editHistory:    [],
-                })
-                odChanged = true
+            // 2. Update OD Balance dynamically so next schedule generation loop iteration is correct
+            syncOdBalanceLog(loanData, odData)
+            odChanged = true
 
             found = true
             break  // regenerate schedule after each deduction
@@ -510,7 +493,7 @@ while true:
 
 2. **In-place mutation:** Both `loanData` and `odData` are modified directly — no copies. [`calculations.ts#L305-L308`](file:///home/aditya/codebase/gemini-projects/home-loan-dashboard/src/lib/calculations.ts#L305-L308)
 
-3. **OD balance auto-snapshot formula:** `max(0, prevBalance - row.installment)` — assumes the EMI/interest is paid from the OD account, reducing its balance. [`calculations.ts#L356`](file:///home/aditya/codebase/gemini-projects/home-loan-dashboard/src/lib/calculations.ts#L356)
+3. **OD balance auto-snapshot formula:** Handled centrally by `syncOdBalanceLog`, which sums contributions and subtracts auto-deducted payments chronologically.
 
 4. **ID generation:** `Math.random().toString(36).slice(2, 11)` — 9-character alphanumeric, non-cryptographic. [`calculations.ts#L332`](file:///home/aditya/codebase/gemini-projects/home-loan-dashboard/src/lib/calculations.ts#L332)
 

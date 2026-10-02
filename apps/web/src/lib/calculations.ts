@@ -1,5 +1,6 @@
 import { AmortizationRow, LoanData, SummaryMetrics } from "./types";
 import { OdSavingsData } from "./od-savings-types";
+import { syncOdBalanceLog } from "./sync-od-balance";
 
 // Historical due dates where actuals came from PDF statements.
 // We now rely on paymentLog.amountDue and paymentLog.amountPaid for these months.
@@ -338,40 +339,9 @@ export function autoDeductPayments(
         });
         loanChanged = true;
 
-        // 2. Add entry to odBalanceLog if no snapshot exists on that exact date
-        const hasOdLog = loanData.odBalanceLog.some((log) => log.date === row.dueDate);
-        if (!hasOdLog) {
-          // Find latest balance before this due date
-          const sortedLogs = [...loanData.odBalanceLog].sort((a, b) =>
-            a.date.localeCompare(b.date)
-          );
-          let prevBalance = 0;
-          for (const log of sortedLogs) {
-            if (log.date < row.dueDate) {
-              prevBalance = log.balance;
-            } else {
-              break;
-            }
-          }
-          const newBalance = Math.max(0, prevBalance - row.installment);
-          const odLogId = Math.random().toString(36).slice(2, 11);
-          
-          loanData.odBalanceLog.push({
-            id: odLogId,
-            date: row.dueDate,
-            balance: newBalance,
-          });
-
-          // 3. Add annotation for the auto-deduction
-          odData.odBalanceAnnotations.push({
-            odBalanceLogId: odLogId,
-            sourceId: null,
-            purpose: "EMI / Interest",
-            note: "Auto-deducted on EMI Day",
-            editHistory: [],
-          });
-          odChanged = true;
-        }
+        // Update OD Balance dynamically so next schedule generation loop iteration is correct
+        syncOdBalanceLog(loanData, odData);
+        odChanged = true;
 
         found = true;
         break; // Break loop to regenerate schedule and process next due date

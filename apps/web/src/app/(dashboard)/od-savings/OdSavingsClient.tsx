@@ -52,8 +52,6 @@ import {
   editGoal,
   addContribution,
   editContribution,
-  addOdBalanceWithAnnotation,
-  editOdBalanceAnnotation,
   updateEmiReserve,
 } from "@/lib/od-savings-actions";
 
@@ -761,36 +759,15 @@ export default function OdSavingsClient({
                   <tr>
                     <th className="px-4 py-3">Date</th>
                     <th className="px-4 py-3">Balance</th>
-                    <th className="px-4 py-3">Source</th>
-                    <th className="px-4 py-3">Purpose</th>
-                    <th className="px-4 py-3">Note</th>
-                    <th className="px-4 py-3 text-center">Actions</th>
-                  </tr>
+                                                                                                  </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {sortedOdLog.map((entry) => {
-                    const ann = annotationMap.get(entry.id);
+                    
                     return (
                       <tr key={entry.id} className="hover:bg-slate-50/80">
                         <td className="px-4 py-2.5 text-slate-600">{entry.date}</td>
                         <td className="px-4 py-2.5 font-semibold text-slate-950">{formatter.format(entry.balance)}</td>
-                        <td className="px-4 py-2.5">
-                          {ann?.sourceId ? (
-                            <span className="text-slate-800">{resolveSource(ann.sourceId)}</span>
-                          ) : (
-                            <span className="text-slate-400 italic">Unspecified</span>
-                          )}
-                        </td>
-                        <td className="px-4 py-2.5 capitalize text-slate-600">{ann?.purpose ?? "savings"}</td>
-                        <td className="px-4 py-2.5 text-slate-400 text-xs">{ann?.note ?? "—"}</td>
-                        <td className="px-4 py-2.5 text-center">
-                          <button
-                            onClick={() => setModal({ type: "edit-annotation", odBalanceLogId: entry.id })}
-                            className="inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:border-teal-200 hover:text-teal-700"
-                          >
-                            <Pencil className="h-3 w-3" /> Annotate
-                          </button>
-                        </td>
                       </tr>
                     );
                   })}
@@ -969,42 +946,6 @@ export default function OdSavingsClient({
               setModal({ type: "sources" });
             }}
             auditHistory={s.editHistory}
-          />
-        );
-      })()}
-
-      {/* Add OD Balance */}
-      {modal.type === "add-od-balance" && (
-        <OdBalanceModal
-          sources={odData.sources.filter((s) => s.isActive)}
-          onClose={closeModal}
-          onSave={async (balEntry, annotation) => {
-            const res = await addOdBalanceWithAnnotation(balEntry, annotation);
-            if (!res.success) return res.error;
-            showToast("OD balance saved.");
-            closeModal();
-          }}
-        />
-      )}
-
-      {/* Edit Annotation */}
-      {modal.type === "edit-annotation" && (() => {
-        const logId = modal.odBalanceLogId;
-        const ann = annotationMap.get(logId);
-        const entry = loanData.odBalanceLog.find((e) => e.id === logId);
-        if (!entry) return null;
-        return (
-          <AnnotationModal
-            entry={entry}
-            annotation={ann}
-            sources={odData.sources.filter((s) => s.isActive)}
-            onClose={closeModal}
-            onSave={async (patch) => {
-              const res = await editOdBalanceAnnotation(logId, patch);
-              if (!res.success) return res.error;
-              showToast("Annotation updated.");
-              closeModal();
-            }}
           />
         );
       })()}
