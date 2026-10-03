@@ -28,15 +28,15 @@ A personal finance dashboard for tracking, analysing, and optimising a home loan
 Complete tracking of money parked in the OD savings account:
 
 - **Balance Waterfall** — OD balance → EMI Reserve (protected, default ₹91,143) → Allocatable Balance → Goal allocations
-- **EMI Reserve** — Inline editable, always shown as protected; amber/red banners if allocations encroach on reserve
+- **EMI Reserve** — Track actual funds allocated to your reserve with a quick **Refill** action; amber/red banners appear if allocations encroach on reserve.
 - **Goal tracking** — Add savings goals with target amounts, target dates, and colour coding
   - Goals Summary strip: Active / Met / Funded counts + progress bar across all goals
   - Per-goal progress bars with headroom indicator (room to allocate within reserve)
   - Direct **Fund** button on each goal card
-- **Contribution log** — Track inflows by source (Salary, Bonus, etc.) for attribution
+- **Contribution log** — Track inflows by source (Salary, Bonus, etc.) for attribution. OD balances are strictly and dynamically derived from this log and your EMI payments.
 - **By Source donut chart** — Visual breakdown of contributions by funding source
-- **MoM OD balance trend** — Area chart of OD balance snapshots alongside cumulative deposits
-- **Automated EMI Deductions** — Engine automatically deducts upcoming EMIs and interest from the OD balance on due dates.
+- **MoM OD balance trend** — Area chart of dynamically computed OD balances alongside cumulative deposits
+- **Automated EMI Deductions** — Engine automatically deducts upcoming EMIs directly from your allocated EMI Reserve on due dates.
 - **Audit trail** — Every edit to sources, goals, and contributions is recorded with before/after diffs
 
 ### ⚙️ Settings & Simulator
