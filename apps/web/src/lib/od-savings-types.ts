@@ -113,6 +113,7 @@ export type OdBalanceAnnotation = z.infer<typeof OdBalanceAnnotationSchema>;
 
 export const OdSavingsDataSchema = z.object({
   emiReserve: z.number().min(0).default(91143),
+  emiReserveAllocated: z.number().min(0).default(0),
   sources: z.array(OdSourceSchema).default([]),
   contributions: z.array(OdContributionSchema).default([]),
   goals: z.array(OdGoalSchema).default([]),

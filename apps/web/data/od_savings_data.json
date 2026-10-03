@@ -1,5 +1,6 @@
 {
   "emiReserve": 91143,
+  "emiReserveAllocated": 91143,
   "sources": [
     {
       "id": "mhk74l284",
@@ -367,7 +368,7 @@
       "id": "7rhgoyo2j",
       "name": "Home Decor",
       "targetAmount": 200000,
-      "allocatedAmount": 62000,
+      "allocatedAmount": 70000,
       "targetDate": "2026-07-31",
       "color": "#0891b2",
       "isActive": true,
@@ -395,6 +396,12 @@
           "field": "allocatedAmount",
           "oldValue": "63000",
           "newValue": "62000"
+        },
+        {
+          "timestamp": "2026-10-03T05:01:46.261Z",
+          "field": "allocatedAmount",
+          "oldValue": "62000",
+          "newValue": "70000"
         }
       ]
     },

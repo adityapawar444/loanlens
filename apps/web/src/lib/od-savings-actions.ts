@@ -64,6 +64,20 @@ export async function updateEmiReserve(amount: number): Promise<ActionResult> {
   return { success: true };
 }
 
+export async function updateEmiReserveAllocated(amount: number): Promise<ActionResult> {
+  if (isNaN(amount) || amount < 0)
+    return { success: false, error: "EMI reserve allocated cannot be negative." };
+  if (amount > 100_000_000)
+    return { success: false, error: "EMI reserve allocated cannot exceed ₹10 Crore." };
+  if (Math.round(amount * 100) !== amount * 100)
+    return { success: false, error: "EMI reserve allocated can have at most 2 decimal places." };
+  const data = await readOdData();
+  data.emiReserveAllocated = amount;
+  await writeOdData(data);
+  revalidatePath("/od-savings");
+  return { success: true };
+}
+
 // ─── Sources ─────────────────────────────────────────────────────────────────
 
 export async function addSource(

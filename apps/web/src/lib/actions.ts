@@ -68,8 +68,18 @@ export async function updatePayment(id: string, amountPaid: number) {
   const data = await readData();
   const payment = data.paymentLog.find(p => p.id === id);
   if (payment) {
+    const diff = amountPaid - (payment.amountPaid || 0);
     payment.amountPaid = amountPaid;
     await writeData(data);
+    
+    if (diff > 0) {
+      const odData = await readOdData();
+      if (odData.emiReserveAllocated > 0) {
+        odData.emiReserveAllocated = Math.max(0, odData.emiReserveAllocated - diff);
+        await writeOdData(odData);
+      }
+    }
+    
     revalidatePath("/");
   }
 }

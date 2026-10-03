@@ -53,6 +53,7 @@ import {
   addContribution,
   editContribution,
   updateEmiReserve,
+  updateEmiReserveAllocated,
 } from "@/lib/od-savings-actions";
 
 // ─── Modal state discriminated union ─────────────────────────────────────────
@@ -189,8 +190,8 @@ export default function OdSavingsClient({
   const emiReserve = odData.emiReserve;
 
   const fundedEmiReserve = useMemo(
-    () => Math.min(latestOdBalance, emiReserve),
-    [latestOdBalance, emiReserve]
+    () => Math.min(latestOdBalance, odData.emiReserveAllocated),
+    [latestOdBalance, odData.emiReserveAllocated]
   );
 
   const allocatableBalance = useMemo(
@@ -219,6 +220,15 @@ export default function OdSavingsClient({
     if (!res.success) { setEmiReserveError(res.error); return; }
     setEditingEmiReserve(false);
     showToast("EMI reserve updated.");
+  }
+
+  const [emiReserveRefilling, setEmiReserveRefilling] = useState(false);
+  async function handleRefillEmiReserve() {
+    setEmiReserveRefilling(true);
+    const res = await updateEmiReserveAllocated(emiReserve);
+    setEmiReserveRefilling(false);
+    if (!res.success) { showToast(res.error); return; }
+    showToast("EMI reserve refilled.");
   }
 
 
@@ -413,12 +423,23 @@ export default function OdSavingsClient({
                 )}
               </div>
               {!editingEmiReserve ? (
-                <button
-                  onClick={() => { setEmiReserveInput(String(emiReserve)); setEmiReserveError(null); setEditingEmiReserve(true); }}
-                  className="flex items-center gap-1 rounded-xl border border-rose-200 bg-white px-2.5 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-100"
-                >
-                  <Pencil className="h-3 w-3" /> Edit
-                </button>
+                <div className="flex items-center gap-1.5">
+                  {odData.emiReserveAllocated < emiReserve && (
+                    <button
+                      onClick={handleRefillEmiReserve}
+                      disabled={emiReserveRefilling}
+                      className="flex items-center gap-1 rounded-xl bg-rose-600 px-2.5 py-1.5 text-xs font-semibold text-white hover:bg-rose-700 disabled:opacity-60"
+                    >
+                      {emiReserveRefilling ? "..." : "Refill"}
+                    </button>
+                  )}
+                  <button
+                    onClick={() => { setEmiReserveInput(String(emiReserve)); setEmiReserveError(null); setEditingEmiReserve(true); }}
+                    className="flex items-center gap-1 rounded-xl border border-rose-200 bg-white px-2.5 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-100"
+                  >
+                    <Pencil className="h-3 w-3" /> Edit
+                  </button>
+                </div>
               ) : (
                 <div className="flex items-center gap-1.5">
                   <input
